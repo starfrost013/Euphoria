@@ -66,7 +66,7 @@ LogSettings* LogSettings_new(const char* fileName, LogChannel channels, LogSourc
 	return settings;
 }
 
-void LogSettings_destroy(LogSettings* settings)
+void LogSettings_destroy(LogSettings** settings)
 {
 	free(settings);
 }
@@ -109,7 +109,7 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 	finalDateBuffer[strlen(finalDateBuffer) - 1] = '\0';
 
 	const char* prefix = "[";
-	const char* dateSuffix = "] ";
+	const char* dateSuffix = "]: ";
 	const char* suffix = " \n";
 
 	assert(dateBuffer[0] != NULL);
@@ -128,7 +128,7 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 
 	if (Util_EnumHasFlag(logger->settings->source, LogSource_File))
 	{
-		fwrite(logStringBuffer, 512 + 32, 1, logger->handle);
+		fwrite(logStringBuffer, strlen(logStringBuffer), 1, logger->handle);
 	}
 }
 
