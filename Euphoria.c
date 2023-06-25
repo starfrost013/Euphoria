@@ -9,5 +9,6 @@ int main()
 	printf(u8"%s\n", EUPHORIA_VERSION_FULL);
 	printf(u8"Initialising Tier 0\n");
 	Tier0_Init();
+	Tier0_Shutdown();
 	return 0;
 }

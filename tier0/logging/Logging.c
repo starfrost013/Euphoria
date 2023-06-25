@@ -61,6 +61,7 @@ LogSettings* LogSettings_new(const char* fileName, LogChannel channels, LogSourc
 	memset(settings, 0x00, sizeof settings);
 	settings->fileName = fileName;
 	settings->channels = channels;
+	settings->source = source;
 	settings->keepOldLogs = keepOldLogs;
 	return settings;
 }
@@ -99,20 +100,22 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 	if (strlen(text) > 512)
 	{
 		printf(u8"Log failed: 0x0004DEAD cannot log string above 512 bytes!");
-		free(dateBuffer);
 		return;
 	}
 
 	// lop off the last character so it doesn't have a new line
 
-	dateBuffer[strlen(dateBuffer) - 1] = '\0';
+	char* finalDateBuffer = *dateBuffer;
+	finalDateBuffer[strlen(finalDateBuffer) - 1] = '\0';
 
 	const char* prefix = "[";
 	const char* dateSuffix = "] ";
 	const char* suffix = " \n";
 
+	assert(dateBuffer[0] != NULL);
+
 	strcat_s(logStringBuffer, sizeof(logStringBuffer), prefix);
-	strcat_s(logStringBuffer, sizeof(logStringBuffer), dateBuffer);
+	strcat_s(logStringBuffer, sizeof(logStringBuffer), finalDateBuffer);
 	strcat_s(textBuffer, sizeof(textBuffer), text);
 	strcat_s(logStringBuffer, sizeof(logStringBuffer), dateSuffix);
 	strcat_s(logStringBuffer, sizeof(logStringBuffer), textBuffer);
@@ -127,8 +130,6 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 	{
 		fwrite(logStringBuffer, 512 + 32, 1, logger->handle);
 	}
-
-	free(dateBuffer);
 }
 
 void Logging_LogAll(const char* text)
@@ -138,6 +139,5 @@ void Logging_LogAll(const char* text)
 
 void Logging_Shutdown()
 {
-	LogSettings_destroy(logger->settings);
 	Logger_destroy(logger);
 }
