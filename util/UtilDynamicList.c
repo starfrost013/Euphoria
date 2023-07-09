@@ -180,6 +180,9 @@ void DynamicList_destroy(DynamicList* list)
 {
 	for (eu_uint32 item = 0; item < list->count; item++)
 	{
-
+		DynamicList_RemoveItemIndex(list, item);
 	}
+
+	free(list->items);
+	free(list);
 }
