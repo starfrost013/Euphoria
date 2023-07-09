@@ -48,7 +48,6 @@ typedef __UINT64_TYPE__ eu_uint64;
 
 #if _WIN32
 // OS configuration
-#define EUPHORIA_BUILD_WINDOWS
 
 // Assume MSVC
 #include <io.h>
@@ -64,7 +63,6 @@ typedef __UINT64_TYPE__ eu_uint64;
 #define SOCKETCLOSE(s) closesocket(s);
 
 #else // assume linux otherwise
-#define EUPHORIA_BUILD_LINUX
 // Assume that any non-Windows platform uses POSIX-style sockets instead. */
 #include <sys/socket.h>
 #include <arpa/inet.h>

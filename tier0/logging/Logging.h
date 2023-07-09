@@ -2,6 +2,7 @@
 #include "../../Euphoria.h"
 
 
+
 typedef enum
 {
 	LogChannel_Message = 1,
@@ -48,3 +49,5 @@ void Logger_destroy(Logger* logger);
 LogSettings* LogSettings_new(const char* fileName, LogChannel channels, LogSource source, bool keepOldLogs);
 
 void LogSettings_destroy(LogSettings* settings);
+
+Logger* gLogger;

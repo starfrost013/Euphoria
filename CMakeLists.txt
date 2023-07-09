@@ -13,10 +13,11 @@ endif()
 project ("Euphoria")
 
 # Add source to this project's executable.
-add_executable (${PROJECT_NAME} "Euphoria.c" "Euphoria.h" "tier0/net/client/NetClient.c" "tier0/net/server/NetServer.c" "tier0/platform/win32/WinSock.c" "tier0/net/client/NetClient.h" "tier0/platform/win32/WinSock.h"  "tier0/logging/Logging.h" "tier0/net/server/NetServer.h" "util/Util.h" "tier0/tier0.c" "tier0/tier0.h" "util/Util.c" "tier0/logging/Logging.c" "tier0/console/GVar.c" "tier0/console/GVar.h")
+add_executable (${PROJECT_NAME} "Euphoria.c" "Euphoria.h" "tier0/net/client/NetClient.c" "tier0/net/server/NetServer.c" "tier0/platform/windows/WinSock.c" "tier0/net/client/NetClient.h" "tier0/platform/windows/WinSock.h"  "tier0/logging/Logging.h" "tier0/net/server/NetServer.h" "util/Util.h" "tier0/tier0.c" "tier0/tier0.h" "util/Util.c" "tier0/logging/Logging.c" "tier0/console/GVar.c" "tier0/console/GVar.h"  "util/UtilDynamicList.c" "util/UtilDynamicList.h")
 
 # Link API ibraries
 if (WIN32)
+	add_compile_definitions("EUPHORIA_BUILD_WINDOWS")
 	if (!MSVC)
 		message(FATAL_ERROR "Only MSVC is supported on win32")
 	else()
@@ -27,6 +28,7 @@ if (WIN32)
 		target_link_libraries(${PROJECT_NAME} wsock32)
 	endif()
 else()
+	add_compile_definitions("EUPHORIA_BUILD_LINUX")
 endif()
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

@@ -2,7 +2,7 @@
 #include "../Euphoria.h"
 #include "logging/Logging.h"
 #ifdef EUPHORIA_BUILD_WINDOWS
-#include "platform/win32/WinSock.h"
+#include "platform/windows/WinSock.h"
 #endif
 
 // Tier 0:
@@ -10,8 +10,10 @@
 
 bool Tier0_Init()
 {
+	printf(u8"Initialising Tier 0\n");
 	Logging_Init();
-	Logging_LogAll("Initialise NetBase");
+	Logging_LogAll(EUPHORIA_VERSION_FULL);
+	Logging_LogAll(u8"Initialise NetBase");
 	NetBase_Init();
 	return true;
 }

@@ -2,8 +2,6 @@
 #include "Logging.h"
 #include "../../util/Util.h"
 
-Logger* logger;
-
 Logger* Logger_new()
 {
 	Logger* logger = (Logger*)malloc(sizeof(Logger));
@@ -66,22 +64,21 @@ LogSettings* LogSettings_new(const char* fileName, LogChannel channels, LogSourc
 	return settings;
 }
 
-void LogSettings_destroy(LogSettings** settings)
+void LogSettings_destroy(LogSettings* settings)
 {
 	free(settings);
 }
 
 bool Logging_Init()
 {
-	logger = Logger_new();
+	gLogger = Logger_new();
 
-	return (logger != NULL);
-
+	return (gLogger != NULL);
 }
 
 void Logging_LogChannel(const char* text, LogChannel channel)
 {
-	if (!Util_EnumHasFlag(logger->settings->channels, channel))
+	if (!Util_EnumHasFlag(gLogger->settings->channels, channel))
 	{
 		printf(u8"Log failed: 0x0003DEAD Tried to output to a closed log channel (%d). See logging.h.", channel);
 		return; 
@@ -95,7 +92,7 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 	memset(&textBuffer, 0x00, sizeof(textBuffer));
 	memset(&logStringBuffer, 0x00, sizeof(logStringBuffer));
 
-	Util_GetCurrentDateString(&dateBuffer);
+	Util_DateGetCurrentString(&dateBuffer);
 
 	if (strlen(text) > 512)
 	{
@@ -121,14 +118,14 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 	strcat_s(logStringBuffer, sizeof(logStringBuffer), textBuffer);
 	strcat_s(logStringBuffer, sizeof(logStringBuffer), suffix);
 
-	if (Util_EnumHasFlag(logger->settings->source, LogSource_Printf))
+	if (Util_EnumHasFlag(gLogger->settings->source, LogSource_Printf))
 	{
 		printf(logStringBuffer);
 	}
 
-	if (Util_EnumHasFlag(logger->settings->source, LogSource_File))
+	if (Util_EnumHasFlag(gLogger->settings->source, LogSource_File))
 	{
-		fwrite(logStringBuffer, strlen(logStringBuffer), 1, logger->handle);
+		fwrite(logStringBuffer, strlen(logStringBuffer), 1, gLogger->handle);
 	}
 }
 
@@ -139,5 +136,5 @@ void Logging_LogAll(const char* text)
 
 void Logging_Shutdown()
 {
-	Logger_destroy(logger);
+	Logger_destroy(gLogger);
 }
