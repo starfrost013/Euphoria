@@ -1,4 +1,5 @@
 #pragma once
+#include "../Euphoria.h"
 #include "Util.h"
 
 void Util_DateGetCurrentString(char **finalArray)
@@ -18,7 +19,7 @@ void Util_DateGetCurrentString(char **finalArray)
 	*finalArray = asctime(&currentTimeInfoPtr);
 }
 
-bool Util_EnumHasFlag(eu_int32 enumValue, eu_int32 flag)
+bool Util_EnumHasFlag(int32_t enumValue, int32_t flag)
 {
 	return ((enumValue & flag) == flag);
 }

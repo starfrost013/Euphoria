@@ -5,7 +5,7 @@
 void Util_DateGetCurrentString(char **finalArray);
 
 // Enum utilities
-bool Util_EnumHasFlag(eu_int32 enumValue, eu_int32 flag);
+bool Util_EnumHasFlag(int32_t enumValue, int32_t flag);
 
 // String utilities
 bool Util_StringBooleanTest(char* string);
