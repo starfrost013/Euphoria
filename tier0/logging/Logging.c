@@ -107,6 +107,18 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 
 	const char* prefix = "[";
 	const char* dateSuffix = "]: ";
+
+	// print separate colours
+	switch (channel)
+	{
+		case LogChannel_Warning:
+			dateSuffix = "WARNING ]: ";
+		case LogChannel_Error:
+			dateSuffix = "ERROR ]: ";
+		case LogChannel_Fatal:
+			dateSuffix = "FATAL ]: ";
+	}
+
 	const char* suffix = " \n";
 
 	assert(dateBuffer[0] != NULL);
@@ -120,6 +132,17 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 
 	if (Util_EnumHasFlag(gLogger->settings->source, LogSource_Printf))
 	{
+		// print separate colours
+		switch (channel)
+		{
+			case LogChannel_Warning:
+				printf("");
+			case LogChannel_Error:
+				dateSuffix = "ERROR ]: ";
+			case LogChannel_Fatal:
+				dateSuffix = "FATAL ]: ";
+		}
+		
 		printf(logStringBuffer);
 	}
 

@@ -24,5 +24,3 @@ typedef struct GVarList_s
 {
 	DynamicList* list;
 } GVarList;
-
-bool GVar_Init();
