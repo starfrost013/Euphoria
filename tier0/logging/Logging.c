@@ -112,11 +112,14 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 	switch (channel)
 	{
 		case LogChannel_Warning:
-			dateSuffix = "WARNING ]: ";
+			prefix = "[WARNING] [:";
+			break;
 		case LogChannel_Error:
-			dateSuffix = "ERROR ]: ";
+			dateSuffix = "[ERROR] [:";
+			break;
 		case LogChannel_Fatal:
-			dateSuffix = "FATAL ]: ";
+			dateSuffix = "[FATAL] [:";
+			break;
 	}
 
 	const char* suffix = " \n";

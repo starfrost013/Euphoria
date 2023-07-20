@@ -1,6 +1,7 @@
 #pragma once
 #include "../Euphoria.h"
 #include "logging/Logging.h"
+#include "../util/UtilConsole.h"
 #include "../util/UtilDynamicList.h"
 #ifdef EUPHORIA_BUILD_WINDOWS
 #include "platform/windows/WinSock.h"
@@ -108,6 +109,19 @@ bool Tier0_Init()
 	printf("\n");
 
 	DynamicList_destroy(list);
+
+	Util_ConsoleClearScreen();
+	Util_ConsoleSetForegroundColor(ConsoleColor_BrightBlue);
+	Util_ConsoleSetBackgroundColor(ConsoleColor_BrightWhite);
+	Logging_LogAll(u8"hahaha");
+	Logging_LogChannel(u8"hahaha", LogChannel_Error);
+	Logging_LogChannel(u8"hahaha", LogChannel_Warning);
+	Logging_LogChannel(u8"hahaha", LogChannel_Fatal);
+
+	Util_ConsoleResetForegroundColor();
+	Util_ConsoleResetBackgroundColor();
+	Logging_LogChannel(u8"hahaha", LogChannel_Message);
+
 
 	return true;
 }

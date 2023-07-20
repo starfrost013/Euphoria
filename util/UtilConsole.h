@@ -28,7 +28,7 @@ typedef enum ConsoleColor_s
 
 void Util_ConsoleSetForegroundColor(ConsoleColor color);
 void Util_ConsoleSetBackgroundColor(ConsoleColor color);
-void Util_ConsoleResetForegroundColor(ConsoleColor color);
-void Util_ConsoleResetBackgroundColor(ConsoleColor color);
-void Util_ConsoleClearScreen(ConsoleColor color);
+void Util_ConsoleResetForegroundColor();
+void Util_ConsoleResetBackgroundColor();
+void Util_ConsoleClearScreen();
 
