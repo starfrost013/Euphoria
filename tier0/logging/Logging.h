@@ -1,9 +1,7 @@
 #pragma once
 #include "../../Euphoria.h"
 
-
-
-typedef enum
+typedef enum LogChannel_s
 {
 	LogChannel_Message = 1,
 
@@ -14,14 +12,14 @@ typedef enum
 	LogChannel_Fatal = 8,
 } LogChannel;
 
-typedef enum
+typedef enum LogSource_s
 {
 	LogSource_Printf = 1,
 
 	LogSource_File = 2,
 } LogSource;
 
-typedef struct
+typedef struct LogSettings_s
 {
 	const char* fileName;
 	LogChannel channels;
@@ -29,13 +27,12 @@ typedef struct
 	bool keepOldLogs;
 } LogSettings;
 
-typedef struct
+typedef struct Logger_s
 {
 	LogSettings* settings;
 	FILE* handle;
 	bool initialised;
 } Logger;
-
 
 bool Logging_Init();
 void Logging_LogChannel(const char* text, LogChannel channel);
