@@ -1,6 +1,7 @@
 #pragma once
 #include "Logging.h"
 #include "../../util/Util.h"
+#include "../../util/UtilConsole.h"
 
 Logger* Logger_new()
 {
@@ -112,13 +113,13 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 	switch (channel)
 	{
 		case LogChannel_Warning:
-			prefix = "[WARNING] [:";
+			prefix = "[WARNING] [";
 			break;
 		case LogChannel_Error:
-			dateSuffix = "[ERROR] [:";
+			prefix = "[ERROR] [";
 			break;
 		case LogChannel_Fatal:
-			dateSuffix = "[FATAL] [:";
+			prefix = "[FATAL] [";
 			break;
 	}
 
@@ -135,7 +136,20 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 
 	if (Util_EnumHasFlag(gLogger->settings->source, LogSource_Printf))
 	{	
+		switch (channel)
+		{
+			case LogChannel_Warning:
+				Util_ConsoleSetForegroundColor(ConsoleColor_Yellow);
+				break;
+			case LogChannel_Error:
+			case LogChannel_Fatal:
+				Util_ConsoleSetForegroundColor(ConsoleColor_Red);
+				break;
+		}
+
 		printf(logStringBuffer);
+
+		Util_ConsoleResetForegroundColor();
 	}
 
 	if (Util_EnumHasFlag(gLogger->settings->source, LogSource_File))
