@@ -37,3 +37,13 @@ bool Util_StringBooleanTest(char* string)
 		return false;
 	}
 }
+
+char* Util_StringFromInt(int32_t num)
+{
+	// 10 digit number as uint32_t max is 2147483647
+	char stringPtr[10];
+	memset(&stringPtr, 0x00, sizeof(uint32_t) * 8 + 1);
+	sprintf_s(&stringPtr, sizeof(char) * 10, "%d", num);
+	
+	return stringPtr;
+}

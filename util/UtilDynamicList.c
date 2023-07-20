@@ -157,7 +157,7 @@ bool DynamicList_RemoveItemSet(DynamicList* list, uint32_t indexStart, uint32_t 
 	assert(indexStart >= 0);
 	assert(indexEnd <= list->capacity);
 
-	for (int curItem = indexStart; curItem <= indexEnd; curItem++)
+	for (uint32_t curItem = indexStart; curItem <= indexEnd; curItem++)
 	{
 		if (!DynamicList_RemoveItemIndex(list, curItem)) return false;
 	}
@@ -205,11 +205,11 @@ void DynamicList_compact(DynamicList* list)
 {
 	assert(list != NULL);
 
-	int moveAmount = 0;
+	uint32_t moveAmount = 0;
 
 	void** item;
 
-	for (int curItem = 0; curItem < list->count; curItem++)
+	for (uint32_t curItem = 0; curItem < list->count; curItem++)
 	{
 		item = DynamicList_GetItemIndex(list, curItem);
 

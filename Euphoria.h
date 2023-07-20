@@ -1,5 +1,7 @@
-﻿// Euphoria.h : Include file for standard system include files,
-// or project specific include files.
+﻿
+//
+// Euphoria.h: Globally shared code across all files.
+// 
 
 #pragma once
 
@@ -12,15 +14,13 @@
 #include <time.h>
 #include <uchar.h>
 
-// TODO: Reference additional headers your program requires here.
-
 #define EUPHORIA_VERSION "0.0.0"
 #define EUPHORIA_VERSION_FULL "Euphoria version " EUPHORIA_VERSION " built: "  __DATE__ " " __TIME__
 
-// Defines
-// MSVC typedefs
-#if _MSC_VER
+// Defines APIs
+// TODO: Do we need exports?
 
+#if _MSC_VER
 
 #define EUPHORIA_API __declspec(dllexport)
 
@@ -31,8 +31,8 @@
 #define EUPHORIA_API __attribute__((visibility("default")))
 #endif
 
-#if _WIN32
 // OS configuration
+#if _WIN32
 
 // Assume MSVC
 #include <io.h>
