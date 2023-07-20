@@ -13,7 +13,7 @@ endif()
 project ("Euphoria")
 
 # Add source to this project's executable.
-add_executable (${PROJECT_NAME} "Euphoria.c" "Euphoria.h" "tier0/net/client/NetClient.c" "tier0/net/server/NetServer.c" "tier0/platform/windows/WinSock.c" "tier0/net/client/NetClient.h" "tier0/platform/windows/WinSock.h"  "tier0/logging/Logging.h" "tier0/net/server/NetServer.h" "util/Util.h" "tier0/tier0.c" "tier0/tier0.h" "util/Util.c" "tier0/logging/Logging.c" "tier0/console/GVar.c" "tier0/console/GVar.h"  "util/UtilDynamicList.c" "util/UtilDynamicList.h")
+add_executable (${PROJECT_NAME} "Euphoria.c" "Euphoria.h" "tier0/net/client/NetClient.c" "tier0/net/server/NetServer.c" "tier0/platform/windows/WinSock.c" "tier0/net/client/NetClient.h" "tier0/platform/windows/WinSock.h"  "tier0/logging/Logging.h" "tier0/net/server/NetServer.h" "util/Util.h" "tier0/tier0.c" "tier0/tier0.h" "util/Util.c" "tier0/logging/Logging.c" "tier0/console/GVar.c" "tier0/console/GVar.h"  "util/UtilDynamicList.c" "util/UtilDynamicList.h" "util/UtilConsole.h" "util/UtilConsole.c")
 
 # Link API ibraries
 if (WIN32)

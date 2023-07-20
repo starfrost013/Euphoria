@@ -1,6 +1,10 @@
 #pragma once
 #include "../Euphoria.h"
 
+//
+//	Util.h: Implements "general" util functions.
+//
+
 // Date utilities
 void Util_DateGetCurrentString(char **finalArray);
 

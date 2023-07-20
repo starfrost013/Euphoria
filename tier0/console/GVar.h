@@ -2,9 +2,9 @@
 #include "../../Euphoria.h"
 #include "../../util/UtilDynamicList.h"
 
-// GVar
-//
-// Implements a key-value pair array of engine global variables.
+// 
+// GVar.h: Implements a key-value pair array of engine global variables.
+// 
 
 typedef enum GVarType_s
 {

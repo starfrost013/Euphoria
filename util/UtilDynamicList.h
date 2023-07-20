@@ -2,6 +2,8 @@
 #include "Util.h"
 #include "../Euphoria.h"
 /*
+	UtilDynamicList.h:
+
 	This is a dynamic list class that takes arbitrary pointers as items and asserts if anything is wrong.
 	You have to cast the type you're adding to void** in order to use this.
 	I recommend having every item you add to one of these be the same.
@@ -30,7 +32,7 @@ void** DynamicList_GetItem(DynamicList* list, void* item);
 
 void** DynamicList_GetItemIndex(DynamicList* list, uint32_t index);
 
-bool DynamicList_RemoveItem(DynamicList* list, void** item);
+bool DynamicList_RemoveItem(DynamicList* list, void* item);
 
 bool DynamicList_RemoveItemIndex(DynamicList* list, uint32_t index);
 

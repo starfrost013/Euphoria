@@ -100,7 +100,7 @@ void** DynamicList_GetItem(DynamicList* list, void* item)
 // Removes the item item from the list list if it exists.
 // Returns TRUE if it was successfully removed.
 // Returns FALSE if it was not.
-bool DynamicList_RemoveItem(DynamicList* list, void** item)
+bool DynamicList_RemoveItem(DynamicList* list, void* item)
 {
 	assert(list != NULL);
 	assert(item != NULL);

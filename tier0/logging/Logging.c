@@ -131,18 +131,7 @@ void Logging_LogChannel(const char* text, LogChannel channel)
 	strcat_s(logStringBuffer, sizeof(logStringBuffer), suffix);
 
 	if (Util_EnumHasFlag(gLogger->settings->source, LogSource_Printf))
-	{
-		// print separate colours
-		switch (channel)
-		{
-			case LogChannel_Warning:
-				printf("");
-			case LogChannel_Error:
-				dateSuffix = "ERROR ]: ";
-			case LogChannel_Fatal:
-				dateSuffix = "FATAL ]: ";
-		}
-		
+	{	
 		printf(logStringBuffer);
 	}
 
