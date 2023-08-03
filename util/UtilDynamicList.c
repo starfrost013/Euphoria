@@ -184,7 +184,7 @@ bool DynamicList_Resize(DynamicList* list, uint32_t capacity)
 	// allocate a newer size. realloc() automatically copies
 	uintptr_t newPtr = (uintptr_t)realloc(list->items, sizeof(uintptr_t) * capacity);
 
-	assert(newPtr != NULL);
+	assert(newPtr != 0);
 
 	list->items = newPtr;
 

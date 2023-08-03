@@ -26,7 +26,7 @@ bool Util_EnumHasFlag(int32_t enumValue, int32_t flag)
 	return ((enumValue & flag) == flag);
 }
 
-bool Util_StringBooleanTest(char* string)
+bool Util_StringFromBoolean(char* string)
 {
 	assert(string != NULL);
 

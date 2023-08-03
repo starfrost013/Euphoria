@@ -26,6 +26,7 @@ if (WIN32)
 
 		target_link_libraries(${PROJECT_NAME} ws2_32)
 		target_link_libraries(${PROJECT_NAME} wsock32)
+		target_link_options(${PROJECT_NAME} PUBLIC "/ZI")
 	endif()
 else()
 	add_compile_definitions("EUPHORIA_BUILD_LINUX")

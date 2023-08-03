@@ -1,6 +1,7 @@
 #pragma once
 #include "../Euphoria.h"
 #include "logging/Logging.h"
+#include "console/GVar.h"
 #include "../util/UtilConsole.h"
 #include "../util/UtilDynamicList.h"
 #ifdef EUPHORIA_BUILD_WINDOWS
@@ -17,7 +18,10 @@ bool Tier0_Init()
 	Logging_LogAll(EUPHORIA_VERSION_FULL);
 	Logging_LogAll(u8"Initialise NetBase");
 	NetBase_Init();
+	Logging_LogAll(u8"Initalising GVars...");
+	GVar_Init();
 
+	/*
 	// Temporary stresstest
 
 	Logging_LogAll(u8"Dynamic List stress for Tier 0");
@@ -110,18 +114,21 @@ bool Tier0_Init()
 
 	DynamicList_destroy(list);
 
+	
+	
 	Util_ConsoleClearScreen();
 	Util_ConsoleSetForegroundColor(ConsoleColor_BrightBlue);
 	Util_ConsoleSetBackgroundColor(ConsoleColor_BrightWhite);
-	Logging_LogAll(u8"hahaha");
+	
 	Logging_LogChannel(u8"hahaha", LogChannel_Error);
+	Logging_LogAll(u8"hahaha");
 	Logging_LogChannel(u8"hahaha", LogChannel_Warning);
 	Logging_LogChannel(u8"hahaha", LogChannel_Fatal);
 
 	Util_ConsoleResetForegroundColor();
 	Util_ConsoleResetBackgroundColor();
 	Logging_LogChannel(u8"hahaha", LogChannel_Message);
-
+	*/
 
 	return true;
 }
