@@ -19,8 +19,8 @@ GVar* GVar_new()
 
 	assert(gVar != NULL);
 
-	memset(gVar->name, 0x00, sizeof(char) * EUPHORIA_GVAR_SIZE);
-	memset(gVar->value, 0x00, sizeof(char) * EUPHORIA_GVAR_SIZE);
+	memset(gVar->name, 0x00, sizeof(char) * EUPHORIA_GVAR_MAX_SIZE);
+	memset(gVar->value, 0x00, sizeof(char) * EUPHORIA_GVAR_MAX_SIZE);
 
 	return gVar;
 }
@@ -29,7 +29,7 @@ bool GVar_AddInt(char* name, int32_t value)
 {
 	GVar* gVar = GVar_new();
 	
-	if (strlen(name) > EUPHORIA_GVAR_SIZE)
+	if (strlen(name) > EUPHORIA_GVAR_MAX_SIZE)
 	{
 		Logging_LogChannel("GVar_AddInt: name too long!", LogChannel_Error);
 		return false;
@@ -37,7 +37,12 @@ bool GVar_AddInt(char* name, int32_t value)
 
 	gVar->type = GVarType_Int;
 
+	strcpy_s(gVar->name, 32, name);
+
+
 	snprintf(gVar->value, 32, "%d", value);
+
+	DynamicList_AddItem(gGvarList, gVar);
 
 	return true;
 }
@@ -46,16 +51,19 @@ bool GVar_AddString(char* name, char* value)
 {
 	GVar* gVar = GVar_new();
 
-	if (strlen(name) > EUPHORIA_GVAR_SIZE)
+	if (strlen(name) > EUPHORIA_GVAR_MAX_SIZE)
 	{
 		Logging_LogChannel("GVar_AddString: name too long!", LogChannel_Error);
 		return false;
 	}
 
-	gVar->type = GVarType_String;
 	strcpy_s(gVar->name, 32, name);
 
-	strcpy(gVar->value, value);
+	gVar->type = GVarType_String;
+
+	strcpy_s(gVar->value, 32, value);
+
+	DynamicList_AddItem(gGvarList, gVar);
 
 	return true;
 }
@@ -64,15 +72,19 @@ bool GVar_AddFloat(char* name, float value)
 {
 	GVar* gVar = GVar_new();
 
-	if (strlen(name) > EUPHORIA_GVAR_SIZE)
+	if (strlen(name) > EUPHORIA_GVAR_MAX_SIZE)
 	{
 		Logging_LogChannel("GVar_AddInt: name too long!", LogChannel_Error);
 		return false;
 	}
 
+	strcpy_s(gVar->name, 32, name);
+
 	gVar->type = GVarType_Float;
 
 	snprintf(gVar->value, 32, "%f", value);
+
+	DynamicList_AddItem(gGvarList, gVar);
 
 	return true;
 }
@@ -84,7 +96,7 @@ uint32_t GVar_GetInt(char* name)
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
 		GVar gVar = **gVarPtr;
 
-		if (gVar.name == name
+		if (strcmp(gVar.name, name) == 0
 			&& gVar.type == GVarType_Int)
 		{
 			int32_t value = atoi(gVar.value);
@@ -101,10 +113,10 @@ char* GVar_GetString(char* name)
 	for (int itemId = 0; itemId < gGvarList->count; itemId++)
 	{
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
-		GVar gVar = **gVarPtr;
+		GVar* gVar = *gVarPtr;
 
-		if (gVar.name == name
-			&& gVar.type == GVarType_String) return gVar.value;
+		if (strcmp(gVar->name, name) == 0
+			&& gVar->type == GVarType_String) return gVar->value;
 
 	}
 
@@ -118,7 +130,7 @@ float GVar_GetFloat(char* name)
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
 		GVar gVar = **gVarPtr;
 
-		if (gVar.name == name
+		if (strcmp(gVar.name, name) == 0
 			&& gVar.type == GVarType_Float)
 		{
 			float value = atof(gVar.value);
@@ -136,7 +148,7 @@ GVar* GVar_GetGVar(char* name)
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
 		GVar* gVar = *gVarPtr;
 
-		if (gVar->name == name) return gVar;
+		if (strcmp(gVar->name, name) == 0) return gVar;
 	}
 
 	return NULL;
@@ -148,7 +160,8 @@ GVar** GVar_GetGVarPtr(char* name)
 	{
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
 		GVar* gVar = *gVarPtr;
-		if (gVar->name == name) return gVarPtr;
+
+		if (strcmp(gVar->name, name) == 0) return gVarPtr;
 	}
 
 	return NULL;

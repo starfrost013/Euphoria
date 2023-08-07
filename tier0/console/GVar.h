@@ -6,7 +6,7 @@
 // GVar.h: Defines a key-value pair array of engine global variables.
 // 
 
-#define EUPHORIA_GVAR_SIZE 32
+#define EUPHORIA_GVAR_MAX_SIZE 32
 
 typedef enum GVarType_s
 {
@@ -17,8 +17,8 @@ typedef enum GVarType_s
 
 typedef struct GVar_s
 {
-	char* name[EUPHORIA_GVAR_SIZE];
-	char* value[EUPHORIA_GVAR_SIZE];
+	char name[EUPHORIA_GVAR_MAX_SIZE];
+	char value[EUPHORIA_GVAR_MAX_SIZE];
 	GVarType type;
 } GVar;
 
