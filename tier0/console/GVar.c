@@ -2,9 +2,6 @@
 #include "GVar.h"
 #include "../logging/Logging.h"
 
-// Nonsense value, in a range where floats are high accuracy
-#define EUPHORIA_GVAR_NO_FLOAT -949.1681742865
-
 // Internal functions
 GVar** GVar_GetGVarPtr(char* name);
 
@@ -94,15 +91,18 @@ uint32_t GVar_GetInt(char* name)
 	for (int itemId = 0; itemId < gGvarList->count; itemId++)
 	{
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
-		GVar gVar = **gVarPtr;
 
-		if (strcmp(gVar.name, name) == 0
-			&& gVar.type == GVarType_Int)
+		if (gVarPtr != NULL)
 		{
-			int32_t value = atoi(gVar.value);
-			return value;
-		}
+			GVar* gVar = *gVarPtr;
 
+			if (strcmp(gVar->name, name) == 0
+				&& gVar->type == GVarType_Int)
+			{
+				int32_t value = atoi(gVar->value);
+				return value;
+			}
+		}
 	}
 
 	return NULL;
@@ -113,11 +113,14 @@ char* GVar_GetString(char* name)
 	for (int itemId = 0; itemId < gGvarList->count; itemId++)
 	{
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
-		GVar* gVar = *gVarPtr;
 
-		if (strcmp(gVar->name, name) == 0
-			&& gVar->type == GVarType_String) return gVar->value;
+		if (gVarPtr != NULL)
+		{
+			GVar* gVar = *gVarPtr;
 
+			if (strcmp(gVar->name, name) == 0
+				&& gVar->type == GVarType_String) return gVar->value;
+		}
 	}
 
 	return NULL;
@@ -128,14 +131,19 @@ float GVar_GetFloat(char* name)
 	for (int itemId = 0; itemId < gGvarList->count; itemId++)
 	{
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
-		GVar gVar = **gVarPtr;
 
-		if (strcmp(gVar.name, name) == 0
-			&& gVar.type == GVarType_Float)
+		if (gVarPtr != NULL)
 		{
-			float value = atof(gVar.value);
-			return value;
+			GVar* gVar = *gVarPtr;
+
+			if (strcmp(gVar->name, name) == 0
+				&& gVar->type == GVarType_Float)
+			{
+				float value = atof(gVar->value);
+				return value;
+			}
 		}
+
 	}
 
 	return EUPHORIA_GVAR_NO_FLOAT;
@@ -146,9 +154,13 @@ GVar* GVar_GetGVar(char* name)
 	for (int itemId = 0; itemId < gGvarList->count; itemId++)
 	{
 		GVar** gVarPtr = (GVar**)DynamicList_GetItemIndex(gGvarList, itemId);
-		GVar* gVar = *gVarPtr;
 
-		if (strcmp(gVar->name, name) == 0) return gVar;
+		if (gVarPtr != NULL)
+		{
+			GVar* gVar = *gVarPtr;
+
+			if (strcmp(gVar->name, name) == 0) return gVar;
+		}
 	}
 
 	return NULL;
@@ -212,24 +224,25 @@ bool GVar_SetFloat(char* name, float value)
 
 bool GVar_Delete(char* name)
 {
-	GVar** gVar = GVar_GetGVarPtr(name);
+	GVar** gVarPtr = GVar_GetGVarPtr(name);
 
-	if (gVar == NULL)
+	if (gVarPtr == NULL)
 	{
 		return false;
 	}
 	else
 	{
-		DynamicList_RemoveItem(gGvarList, gVar);
+		GVar* gVar = *gVarPtr;
+		DynamicList_RemoveItem(gGvarList, gVarPtr);
+
 		GVar_destroy(gVar);
+		DynamicList_compact(gGvarList);
 		return true;
 	}
 }
 
 void GVar_destroy(GVar* gVar)
 {
-	free((void*)gVar->name);
-	free((void*)gVar->value);
 	free((void*)gVar);
 }
 

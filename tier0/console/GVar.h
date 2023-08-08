@@ -6,7 +6,11 @@
 // GVar.h: Defines a key-value pair array of engine global variables.
 // 
 
+// Define maximum size of gvar name.
 #define EUPHORIA_GVAR_MAX_SIZE 32
+
+// Nonsense value that will never be reached
+#define EUPHORIA_GVAR_NO_FLOAT 9.90000026e+09f
 
 typedef enum GVarType_s
 {

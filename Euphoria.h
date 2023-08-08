@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <time.h>
 #include <uchar.h>
+#include <limits.h>
 
 #define EUPHORIA_VERSION "0.0.0"
 #define EUPHORIA_VERSION_FULL "Euphoria version " EUPHORIA_VERSION " built: "  __DATE__ " " __TIME__
